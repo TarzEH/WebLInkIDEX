@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Our App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        
+        .container {
+            text-align: center;
+        }
+        
+        .download-btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Download Our App</h1>
+        <a id="downloadLink" class="download-btn" href="#">Download Now</a>
+    </div>
+
+    <script>
+        function getAppStoreLink() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            // iOS detection
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                return 'https://apps.apple.com/app/daon-identityx/id467423665';
+            } else {
+                return 'https://play.google.com/store/apps/details?id=com.daon.identityx';
+            }
+
+        }
+
+        // Set the download link
+        document.addEventListener('DOMContentLoaded', function() {
+            const downloadLink = document.getElementById('downloadLink');
+            downloadLink.href = getAppStoreLink();
+        });
+    </script>
+</body>
+
+</html>
