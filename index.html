@@ -33,13 +33,33 @@
             cursor: pointer;
             border-radius: 12px;
         }
+        
+        #emailForm {
+            margin-top: 20px;
+        }
+        
+        #emailInput {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+        }
+        
+        #desktopDownloadBtn {
+            background-color: #008CBA;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <h1>Download Our App</h1>
-        <a id="downloadLink" class="download-btn" href="#">Download Now</a>
+        <a id="downloadLink" class="download-btn" href="#" target="_blank">Download IdentiyX Application For Mobile Now</a>
+        <div id="emailForm">
+            <input type="email" id="emailInput" placeholder="Please insert your private email">
+            <button id="desktopDownloadBtn" class="download-btn">Download Citrix Client for Desktop</button>
+        </div>
     </div>
 
     <script>
@@ -52,13 +72,45 @@
             } else {
                 return 'https://play.google.com/store/apps/details?id=com.daon.identityx';
             }
-
         }
 
         // Set the download link
         document.addEventListener('DOMContentLoaded', function() {
             const downloadLink = document.getElementById('downloadLink');
+            const desktopDownloadBtn = document.getElementById('desktopDownloadBtn');
+
             downloadLink.href = getAppStoreLink();
+
+            desktopDownloadBtn.addEventListener('click', function() {
+                const email = document.getElementById('emailInput').value;
+                if (email) {
+                    fetch('https://hook.eu1.make.com/vv2bral2qur6z6g745byqa7bih84zuve', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                email: email
+                            }),
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.text();
+                        })
+                        .then(data => {
+                            console.log('Success:', data);
+                            alert('Thank you! Check your email for the download link.');
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                            alert('An error occurred. Please try again.');
+                        });
+                } else {
+                    alert('Please enter your email address.');
+                }
+            });
         });
     </script>
 </body>
